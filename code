@@ -5,75 +5,51 @@ public class lab10 {
 
 	public static void main(String[] args) {
 		Scanner get = new Scanner(System.in);
-		Scanner get2 = new Scanner(System.in);
-		Scanner get3 = new Scanner(System.in);
 
 		Random ran = new Random();
 
-		int start = ran.nextInt(99) + 1;
-		int end = ran.nextInt(99) + 1;
 		int win = 0;
 		int loss = 0;
-		boolean keepGoing = false;
+		boolean keepGoing = true;
 
-		System.out.println("enter a number: ");
-		int num = get.nextInt();
-		displayGuessResults(start, end, num);
+		while (keepGoing) {
+			int start = ran.nextInt(99) + 1;
+			int end = ran.nextInt(99) + 1;
+			System.out.println("Guess a number: --> ");
+			int num = get.nextInt();
+			get.nextLine();
+			boolean result = displayGuessResults(start, end, num);
 
-		if (displayGuessResults(start, end, num) == true) {
-			win++;
-		}
-		if (displayGuessResults(start, end, num) == false) {
-			loss++;
-		}
-
-		System.out.println("enter 'yes' to continue: ");
-		String ans = get2.nextLine();
-
-		if (ans.equalsIgnoreCase("yes")) {
-			keepGoing = true;
-
-		} else {
-			keepGoing = false;
-			System.out.println("There are " + win + " guess(es) within the range");
-			double percent = (win / (win + loss));
-			System.out.println("Correct guess percentage is " + (percent*100) + "%");
-		}
-		while (keepGoing == true) {
-			start = ran.nextInt(99) + 1;
-			end = ran.nextInt(99) + 1;
-
-			displayGuessResults(start, end, getValidGuess(get));
-			if (displayGuessResults(start, end, num) == true) {
+			if (result) {
 				win++;
-			}
-
-			if (displayGuessResults(start, end, num) == false) {
+			} else {
 				loss++;
 			}
-			System.out.println("enter 'yes' to continue: ");
-			String ans2 = get2.nextLine();
-			if (ans2.equalsIgnoreCase("yes")) {
+
+			System.out.println("\nEnter 'yes' to repeat: --> ");
+			String ans = get.nextLine();
+
+			if (ans.equalsIgnoreCase("yes")) {
 				keepGoing = true;
 
 			} else {
 				keepGoing = false;
 
 			}
+
 		}
 		if (keepGoing == false) {
 			System.out.println("There are " + win + " guess(es) within the range");
-			double percent1 = (win / (win + loss));
-			System.out.println("Correct guess percentage is " + (percent1) + "%");
-
+			double percent = ((double) win / (win + loss));
+			System.out.println("Correct guess percentage is " + (percent * 100) + "%");
 		}
 
 	}
 
-	public static int getValidGuess(Scanner get3) {
+	public static int getValidGuess(Scanner get) {
 		int num = 0;
 		System.out.println("enter a number: ");
-		num = get3.nextInt();
+		num = get.nextInt();
 
 		if (num < 100 && num > 0) {
 			return num;
@@ -84,7 +60,6 @@ public class lab10 {
 	}
 
 	public static boolean displayGuessResults(int start, int end, int num) {
-		boolean results = false;
 		int min = 0, max = 0;
 		if (start > end) {
 			max = start;
@@ -96,14 +71,14 @@ public class lab10 {
 		}
 
 		if (min <= num && num <= max) {
-			System.out.println("You entered: " + num + " the nubmers are " + start + " and " + end);
-			System.out.println("good guess");
-			return results = true;
+			System.out.println("You entered: " + num + " the random numbers are " + start + " and " + end);
+			System.out.println("Good Guess!");
+			return true;
 
 		} else {
-			System.out.println("You entered: " + num + " the nubmers are " + start + " and " + end);
-			System.out.println("out of bounds");
-			return results = false;
+			System.out.println("You entered: " + num + " the random numbers are " + start + " and " + end);
+			System.out.println("Out of Range");
+			return false;
 		}
 
 	}
